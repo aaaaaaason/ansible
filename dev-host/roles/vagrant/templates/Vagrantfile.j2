@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'socket'
+
+# Install vagrant-disksize to allow resizing the vagrant box disk.
+unless Vagrant.has_plugin?("vagrant-disksize")
+  raise  Vagrant::Errors::VagrantError.new, "vagrant-disksize plugin is missing. Please install it using 'vagrant plugin install vagrant-disksize' and rerun 'vagrant up'"
+end
+
+# get current network interface
+if_name = ""
+addr_infos = Socket.getifaddrs
+addr_infos.each do |addr_info|
+    if addr_info.addr && addr_info.addr.ipv4? && addr_info.addr.ip_address != "127.0.0.1"
+      if_name = addr_info.name
+        break
+    end
+end
+
+# get bridge name
+bridge_name = `VBoxManage list bridgedifs | grep ^Name.*#{if_name} | sed -e "s/Name:[[:space:]]*//"`.gsub("\n", "")
+
+# get ssh key
+ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "{{ vagrant_host_name }}" do |n|
+    
+    n.vm.box = "{{ vagrant_box_name }}"
+    n.disksize.size = '10GB'
+    n.vm.box_check_update = true
+    
+    n.vm.network "public_network", :bridge => bridge_name, ip: "{{ vagrant_host }}"
+
+    n.vm.provision "shell", inline: <<-SHELL
+      echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+      echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
+      apt-get update
+    SHELL
+
+    n.vm.provider "virtualbox" do |vb|
+      # multiple cpu support
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      
+      vb.gui = false
+      vb.cpus = 1 
+      vb.memory = 4096
+    end
+  
+  end # each nodes
+  
+end
