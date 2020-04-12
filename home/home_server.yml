@@ -11,4 +11,6 @@
       tags: nodejs
     - role: "../roles/code_server"
       tags: code
+    - role: "../roles/kind"
+      tags: kind
 

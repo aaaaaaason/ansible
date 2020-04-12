@@ -17,7 +17,7 @@
   become: true
   file:
     src: "{{ extract_path }}/{{ ( (out.dest | basename | splitext)[0] | splitext)[0] }}/code-server"
-    path: "/usr/bin/code-server"
+    path: "/usr/local/bin/code-server"
     state: link
 
 - name: remove downloaded file

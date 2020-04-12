@@ -1,9 +1,10 @@
 ---
 - name: install golang package
   become: true
-  apt:
-    name: golang-go
-    update_cache: true
+  unarchive:
+    remote_src: true
+    src: "{{ golang_release_path }}"
+    dest: "{{ extract_path }}"
 
 - name: make sure gopath exists
   file:
@@ -11,12 +12,17 @@
     state: directory
     mode: 0644
 
-- name: adding GOPATH path in the bashrc files
+- name: add GOPATH in bashrc
   lineinfile:
     path: /home/{{ ansible_user_id }}/.bashrc
     line: export GOPATH={{ gopath }}
     insertafter: EOF
     state: present
 
-- name: source the bashrc file
-  shell: . /home/{{ ansible_user_id }}/.bashrc
+- name: add go/bin path in profile
+  become: true
+  lineinfile:
+    path: /etc/profile
+    line: export PATH=$PATH:/usr/local/go/bin
+    insertafter: EOF
+    state: present

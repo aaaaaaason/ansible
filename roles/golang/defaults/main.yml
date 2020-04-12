@@ -1,2 +1,4 @@
+golang_release_path: https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz
+extract_path: /usr/local
 project_dir: Projects
 gopath: /home/{{ ansible_user_id }}/{{ project_dir }}/go

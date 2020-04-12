@@ -1,0 +1,10 @@
+---
+- name: download kind release
+  get_url:
+    url: "{{ kind_release_path }}"
+    dest: /home/{{ ansible_user_id }}/kind
+    mode: 0744
+
+- name: move kind to bin path
+  become: true
+  command: mv /home/{{ ansible_user_id }}/kind /usr/local/bin
