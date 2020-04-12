@@ -1,0 +1,2 @@
+project_dir: Projects
+gopath: /home/{{ ansible_user_id }}/{{ project_dir }}/go

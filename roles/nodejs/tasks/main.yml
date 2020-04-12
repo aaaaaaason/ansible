@@ -1,0 +1,8 @@
+---
+- name: install node
+  become: true
+  apt:
+    name:
+      - nodejs
+      - npm
+    update_cache: true

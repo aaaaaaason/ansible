@@ -1,0 +1,26 @@
+---
+- name: download code-server release
+  get_url:
+    url: "{{ github_release_path }}"
+    dest: /home/{{ ansible_user_id }}/
+    mode: 0666
+  register: out
+
+- name: unarchive code-server
+  become: true
+  unarchive:
+    remote_src: true
+    src: "{{ out.dest }}"
+    dest: "{{ extract_path }}"
+
+- name: link code-server
+  become: true
+  file:
+    src: "{{ extract_path }}/{{ ( (out.dest | basename | splitext)[0] | splitext)[0] }}/code-server"
+    path: "/usr/bin/code-server"
+    state: link
+
+- name: remove downloaded file
+  file:
+    path: "{{ out.dest }}"
+    state: absent

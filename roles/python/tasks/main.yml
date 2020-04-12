@@ -1,0 +1,6 @@
+- name: install wanted packages
+  become: true
+  apt:
+    name:
+      - virtualenv
+    update_cache: true

@@ -1,0 +1,7 @@
+---
+all:
+  hosts:
+    dev_vm:
+      ansible_host: 192.168.0.151
+    home_server:
+      ansible_host: 192.168.0.109

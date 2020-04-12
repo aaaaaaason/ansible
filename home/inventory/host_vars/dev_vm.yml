@@ -1,0 +1,5 @@
+---
+vagrant_box_name: "ubuntu/bionic64"
+vagrant_host_name: "dev_vm"
+vagrant_host: "192.168.0.151"
+vagrant_tmpdir: "/tmp/vagrant/dev_vm"

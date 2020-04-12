@@ -1,0 +1,14 @@
+---
+- hosts: home_server
+  roles:
+    - role: "../roles/docker"
+      tags: docker
+    - role: "../roles/python"
+      tags: python
+    - role: "../roles/golang"
+      tags: golang
+    - role: "../roles/nodejs"
+      tags: nodejs
+    - role: "../roles/code_server"
+      tags: code
+
