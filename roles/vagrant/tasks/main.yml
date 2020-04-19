@@ -1,5 +1,17 @@
+- name: download vagrant
+  get_url:
+    url: https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.deb
+    dest: /home/{{ ansible_user_id }}/vagrant.deb
+  
 - name: install vagrant
   become: true
-  apt:
-    name: vagrant
-    update_cache: true
+  shell: dpkg -i vagrant.deb
+
+- name: remove vagrant deb
+  file:
+    path: /home/{{ ansible_user_id }}/vagrant.deb
+    state: absent
+
+- name: install disksize plugin
+  shell: vagrant plugin install vagrant-disksize
+

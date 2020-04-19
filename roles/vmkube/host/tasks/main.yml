@@ -1,0 +1,13 @@
+
+- name: setup vagrant
+  file:
+    path: "{{ vagrant_path }}"
+    state: directory
+  
+- name: copy vagrant file
+  template:
+    src: ../templates/Vagrantfile.j2
+    dest: "{{ vagrant_path }}/Vagrantfile"
+  
+- name: start vm
+  shell: cd {{ vagrant_path }}; vagrant up; cd -

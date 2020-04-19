@@ -1,6 +1,8 @@
 ---
 - hosts: home_server
   roles:
+    - role: "../roles/virtualbox"
+      tags: virtualbox
     - role: "../roles/vagrant"
       tags: vagrant
     - role: "../roles/docker"

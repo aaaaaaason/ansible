@@ -1,0 +1,16 @@
+---
+#- hosts: home_server
+#  roles:
+#    - role: "../roles/vmkube/host"
+#      tags: host
+
+- hosts: vm[0]
+  roles:
+    - role: "../roles/vmkube/master"
+      tags: master
+
+#- hosts: vm[1:]
+#  roles:
+#    - role: "../roles/kube"
+#      tags: node
+ 
