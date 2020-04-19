@@ -1,6 +1,8 @@
 ---
 - hosts: home_server
   roles:
+    - role: "../roles/vagrant"
+      tags: vagrant
     - role: "../roles/docker"
       tags: docker
     - role: "../roles/python"
@@ -13,4 +15,6 @@
       tags: code
     - role: "../roles/kind"
       tags: kind
+    - role: "../roles/kubectl"
+      tags: kubectl
 

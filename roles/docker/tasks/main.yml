@@ -44,3 +44,17 @@
     name: '{{ ansible_user_id }}'
     groups: docker
     append: true
+
+- name: install docker compose
+  become: true 
+  shell: |-
+    curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+- name: let docker compose executable
+  become: true  
+  file:
+    path: /usr/local/bin/docker-compose
+    owner: root
+    group: root
+    mode: 0555
+  
