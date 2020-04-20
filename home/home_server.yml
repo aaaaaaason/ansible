@@ -1,5 +1,7 @@
 ---
 - hosts: home_server
+#- hosts: localhost
+#  connection: local
   roles:
     - role: "../roles/virtualbox"
       tags: virtualbox
@@ -19,4 +21,6 @@
       tags: kind
     - role: "../roles/kubectl"
       tags: kubectl
+    - role: "../roles/helm"
+      tags: helm
 
