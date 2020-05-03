@@ -1,0 +1,10 @@
+- name: clone git repos
+  git:
+    repo: "{{ item.repo }}"
+    dest: /home/{{ ansible_user_id }}/{{ project_dir }}/{{ item.dest }}
+    update: no
+  with_items:
+    - { repo: "https://github.com/aaaaaaason/scripts.git", dest: scripts }
+    - { repo: "https://github.com/aaaaaaason/docker.git", dest: docker }
+
+

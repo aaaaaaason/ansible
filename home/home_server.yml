@@ -23,4 +23,8 @@
       tags: kubectl
     - role: "../roles/helm"
       tags: helm
+    - role: "../roles/wol"
+      tags: wol
+    - role: "../roles/repos"
+      tags: repos
 

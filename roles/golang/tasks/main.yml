@@ -7,10 +7,11 @@
     dest: "{{ extract_path }}"
 
 - name: make sure gopath exists
+  become: true
   file:
     path: "{{ gopath }}"
     state: directory
-    mode: 0644
+    mode: 0755
 
 - name: add GOPATH in bashrc
   lineinfile:

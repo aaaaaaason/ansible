@@ -1,0 +1,31 @@
+- name: install wol
+  become: true
+  apt:
+    name:
+      - net-tools
+      - ethtool
+      - wakeonlan
+    update_cache: true
+
+- name: get default interface
+  shell: route | grep '^default' | grep -o '[^ ]*$'
+  register: default_network_interface
+
+- name: copy systemd service file
+  become: true
+  template:
+    src: "../templates/wol.service.j2"
+    dest: "/etc/systemd/system/wol.service"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable wol and ensure it is not masked
+  become: true
+  systemd:
+    name: wol
+    enabled: yes
+    masked: no
+    state: started
+    daemon_reload: yes
+
